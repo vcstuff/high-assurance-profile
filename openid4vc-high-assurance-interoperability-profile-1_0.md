@@ -225,6 +225,7 @@ Requirements for both the Wallet and the Verifier:
 
 # OpenID for Verifiable Presentations over W3C Digital Credentials API
 
+<<<<<<< HEAD
 The following requirements apply for both, the Wallet and the Verifier, unless specified otherwise:
 
 * MUST support Annex A in [@!OIDF.OID4VP] that defines how to use OpenID4VP over the W3C Digital Credentials API.
@@ -234,6 +235,15 @@ The following requirements apply for both, the Wallet and the Verifier, unless s
 * Specific requirements for the response encryption are tbd (https://github.com/openid/oid4vc-haip/issues/131).
 * The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DCQL query and response that MUST be supported:
   * tbd (https://github.com/openid/oid4vc-haip/issues/142)
+=======
+* MUST support Annex A in [@!OIDF.OID4VP] that defines how to use OID4VP over the W3C Digital Credentials API.
+  * The Wallet MUST support both signed and unsigned requests defined in Annex A.3.1 and A.3.2 of [@!OIDF.OID4VP]. The Verifier MUST support signed and/or unsigned requests.
+* Wallet Invocation is done via the W3C Digital Credentials API or an equivalent platform API. Custom URL schemes MUST NOT be used.
+* Response Mode MUST be `w3c_dc_api.jwt`. Encryption of the response is mandatory.
+* MUST support Transaction Data defined in Sections 5.4 and 7.4 of [@!OIDF.OID4VP].
+* The DQCL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DQCL query and response that MUST be supported:
+  * tbd
+>>>>>>> 982985f (allow both signed and unsigned requests. mandate both for the wallet, clarify that the verifier has a choice)
 
 ## ISO mdoc specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
