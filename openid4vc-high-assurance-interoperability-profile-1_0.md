@@ -496,6 +496,10 @@ The technology described in this specification was made available from contribut
 
    [[ To be removed from the final specification ]]
 
+   -02
+
+   * Add SessionTranscript requirements
+   
    -01
 
    * Rename specification to enable non-SD-JWT credential formats to be included
