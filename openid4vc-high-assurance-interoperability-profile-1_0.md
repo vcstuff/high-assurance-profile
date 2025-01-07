@@ -524,6 +524,7 @@ The technology described in this specification was made available from contribut
    -02
 
    * Mandate DCQL instead of presentation exchange
+   * Refactor HAIP and add details for mdoc profile over DC API
 
    -01
 
