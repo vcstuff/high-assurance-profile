@@ -216,12 +216,8 @@ Requirements for both the Wallet and the Verifier:
    * Authorization Request MUST be sent using the `request_uri` parameter as defined in JWT-Secured Authorization Request (JAR) [@!RFC9101].
    * The Client Identifier Scheme as introduced in Section 5.10 of [@!OIDF.OID4VP] MUST be either `x509_san_dns` or `verifier_attestation`. The Wallet MUST support both. The Verifier MUST support at least one.
    * To obtain the issuer's public key for verification, verifiers MUST support Web-based key resolution, as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
-   * Presentation Definition JSON object MUST be sent using a `presentation_definition` parameter.
-   * The following features from the DIF Presentation Exchange v2.0.0 MUST be supported. A JSON schema for the supported features is in (#presentation-definition-schema):
-
-    * In the `presentation_definition` object, `id`, `input_descriptors` and `submission_requirements` properties MUST be supported.
-    * In the `input-descriptors` object, `id`, `name`, `purpose`, `group`, `format`, and `constraints` properties MUST be supported. In the `constraints` object, `limit_disclosure`, and `fields` properties MUST be supported. In the `fields` object, `path` and `filter` properties MUST be supported. A `path` MUST contain exactly one entry with a static path to a certain claim. A `filter` MUST only contain `type` elements of value `string` and `const` elements.
-    * In the `submission_requirements` object, `name`, `rule (`pick` only)`, `count`, `from` properties MUST be supported.
+   * The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Below is the list of features in the DCQL query and response that MUST be supported:
+     * tbd (https://github.com/openid/oid4vc-haip/issues/142)
 
 # OpenID for Verifiable Presentations over W3C Digital Credentials API
 
@@ -508,10 +504,6 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
 # Combined Issuance of SD-JWT VC and mdocs
 
    * If combined issuance is required, the Batch Credential Endpoint MUST be supported.
-
-# JSON Schema for the supported Presentation Definition properties {#presentation-definition-schema}
-
-<{{schemas/presentation_definition.json}}
 
 # Acknowledgements {#Acknowledgements}
 
