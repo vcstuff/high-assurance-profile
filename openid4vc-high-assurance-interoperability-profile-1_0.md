@@ -7,7 +7,7 @@ keyword = ["security", "openid4vc", "sd-jwt", "sd-jwt-vc", "mdoc"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "openid4vc-high-assurance-interoperability-profile-1_0-01"
+value = "openid4vc-high-assurance-interoperability-profile-1_0-02"
 status = "standard"
 
 [[author]]
@@ -531,13 +531,16 @@ The technology described in this specification was made available from contribut
 
    [[ To be removed from the final specification ]]
 
+   -02
+
+   * Add specific requirements for response encryption
+
    -01
 
    * Rename specification to enable non-SD-JWT credential formats to be included
    * Require encrypted responses
    * Remove reference to `client_id_scheme` parameter that no longer exists in OpenID4VP
    * Refresh tokens are now optional
-   * Add specific requirements for response encryption
 
    -00
 
