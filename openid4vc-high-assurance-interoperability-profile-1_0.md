@@ -149,7 +149,7 @@ Wallets MUST use attestations following the definition given in [@!I-D.ietf-oaut
 
 In addition to this definition, the Wallet Attestation MAY contain the following claims in the `cnf` element:
 
-* `key_type`: OPTIONAL. JSON String that asserts the security mechanism the Wallet uses to manage the private key associated with the public key given in the `cnf` claim. This mechanism is based on the capabilities of the execution environent of the Wallet, this might be a secure element (in case of a Wallet residing on a smartphone) or a Cloud-HSM (in case of a cloud Wallet). This specification defines the following values for `key_type`:
+* `key_type`: OPTIONAL. JSON String that asserts the security mechanism the Wallet uses to manage the private key associated with the public key given in the `cnf` claim. This mechanism is based on the capabilities of the execution enviroment of the Wallet, this might be a secure element (in case of a Wallet residing on a smartphone) or a Cloud-HSM (in case of a cloud Wallet). This specification defines the following values for `key_type`:
   * `software`: It MUST be used when the Wallet uses software-based key management.
   * `hardware`: It MUST be used when the Wallet uses hardware-based key management.
   * `tee`: It SHOULD be used when the Wallet uses the Trusted Execution Environment for key management.
