@@ -242,41 +242,7 @@ Requirements for both the Wallet and the Verifier:
 * ISO mdoc Credential Format specific DCQL parameters as defined in Annex B.3.1 of [@!OIDF.OID4VP] MUST be used.
 * Verifier MAY request more than one Credential in the same request.
 * When multiple ISO mdocs are being returned, each ISO mdoc MUST be returned in a separate `DeviceResponse` (as defined in 8.3.2.1.2.2 of [@!ISO.18013-5]), each matching to a respective DCQL query. Therefore, the resulting `vp_token` contains multiple `DeviceResponse` instances.
-
-### Session Transcript
-
-The `SessionTranscript` as defined in Section 9.1.5.1 in [@ISO.18013-5] MUST be used with the following changes:
-
-* `DeviceEngagementBytes` MUST be null.
-* `EReaderKeyBytes` MUST be null.
-
-```
-SessionTranscript = [
-  null,
-  null,
-  Handover
-]
-```
-
-The `Handover` element is defined as following:
-
-```
-Handover = OID4VPDCAPIHandover
-OID4VPDCAPIHandover = [
-  "OID4VPDCAPIHandover"
-  clientId
-  origin
-  nonce
-]
-
-clientId = tstr ; using UTF-8
-origin = tstr ; using UTF-8
-nonce = tstr ; using UTF-8
-```
-
-* "OID4VPDCAPIHandover" is a string that identifies the type of handover structure as a security measure to prevent confusion of handovers.
-* `clientId` and `nonce` parameters in the Handover MUST be the `client_id` and `nonce` parameters included in the Authorization Request from the Verifier.
-* `origin` in the Handover is the origin of the Verifier, obtained from the Web-platform and/or app platform.
+* The `SessionTranscript` and `Handover` CBOR structures MUST be generated in accordance with Annex B.3.4.1 of [@!OIDF.OID4VP].
 
 ## IETF SD-JWT VC specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
@@ -528,6 +494,10 @@ The technology described in this specification was made available from contribut
 
    [[ To be removed from the final specification ]]
 
+   -02
+
+   * Add SessionTranscript requirements
+   
    -01
 
    * Rename specification to enable non-SD-JWT credential formats to be included
