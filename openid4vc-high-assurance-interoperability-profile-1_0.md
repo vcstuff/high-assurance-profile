@@ -208,16 +208,49 @@ This is an example of a Wallet Instance Attestation:
 
 # OpenID for Verifiable Presentations profile for IETF SD-JWT VC
 
-   * MUST support protocol extensions for SD-JWT VC credential format profile as defined in this specification (#vc_sd_jwt_profile).
-   * As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the Wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
-   * Response type MUST be `vp_token`.
-   * Response mode MUST be `direct_post`. The Verifier MUST return `redirect_uri` in response to the HTTP POST request from the Wallet, where the Wallet redirects the User to, as defined in Section 6.2 of [@!OIDF.OID4VP]. Implementation considerations for the response mode `direct_post` are given in Section 11.5 of [@!OIDF.OID4VP].
-   * Authorization Request MUST be sent using the `request_uri` parameter as defined in JWT-Secured Authorization Request (JAR) [@!RFC9101].
-   * `client_id_scheme` parameter MUST be present in the Authorization Request.
-   * `client_id_scheme` value MUST be either `x509_san_dns` or `verifier_attestation`. The Wallet MUST support both. The Verifier MUST support at least one.
-   * To obtain the issuer's public key for verification, verifiers MUST support Web-based key resolution, as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
-   * Presentation Definition JSON object MUST be sent using a `presentation_definition` parameter.
-   * The following features from the DIF Presentation Exchange v2.0.0 MUST be supported. A JSON schema for the supported features is in (#presentation-definition-schema):
+
+Requirements for both the Wallet and the Verifier:
+
+* As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
+* Response type MUST be `vp_token`.
+* Response mode MUST be `direct_post.jwt`. The Verifier MUST return `redirect_uri` in response to the HTTP POST request from the Wallet, where the Wallet redirects the User to, as defined in Section 7.2 of [@!OIDF.OID4VP]. Implementation considerations for the response mode `direct_post.jwt` are given in Section 12.4 of [@!OIDF.OID4VP].
+* Authorization Request MUST be sent using the `request_uri` parameter as defined in JWT-Secured Authorization Request (JAR) [@!RFC9101].
+* The Client Identifier Scheme as introduced in Section 5.10 of [@!OIDF.OID4VP] MUST be either `x509_san_dns` or `verifier_attestation`. The Wallet MUST support both. The Verifier MUST support at least one.
+* To obtain the issuer's public key for verification, verifiers MUST support Web-based key resolution, as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
+* Presentation Definition JSON object MUST be sent using a `presentation_definition` parameter.
+* The following features from the DIF Presentation Exchange v2.0.0 MUST be supported. A JSON schema for the supported features is in (#presentation-definition-schema):
+  * In the `presentation_definition` object, `id`, `input_descriptors` and `submission_requirements` properties MUST be supported.
+  * In the `input-descriptors` object, `id`, `name`, `purpose`, `group`, `format`, and `constraints` properties MUST be supported. In the `constraints` object, `limit_disclosure`, and `fields` properties MUST be supported. In the `fields` object, `path` and `filter` properties MUST be supported. A `path` MUST contain exactly one entry with a static path to a certain claim. A `filter` MUST only contain `type` elements of value `string` and `const` elements.
+  * In the `submission_requirements` object, `name`, `rule (`pick` only)`, `count`, `from` properties MUST be supported.
+
+# OpenID for Verifiable Presentations over W3C Digital Credentials API
+
+The following requirements apply for both, the Wallet and the Verifier, unless specified otherwise:
+
+* MUST support Annex A in [@!OIDF.OID4VP] that defines how to use OpenID4VP over the W3C Digital Credentials API.
+  * The Wallet MUST support both signed and unsigned requests as defined in Annex A.3.1 and A.3.2 of [@!OIDF.OID4VP]. The Verifier MAY support signed requests, unsigned requests, or both.
+* Wallet Invocation is done via the W3C Digital Credentials API or an equivalent platform API. Any other mechanism, including Custom URL schemes, MUST NOT be used.
+* Response Mode MUST be `dc_api.jwt`. The response MUST be encrypted.
+* Specific requirements for the response encryption are tbd (https://github.com/openid/oid4vc-haip/issues/131).
+* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DCQL query and response that MUST be supported:
+  * tbd (https://github.com/openid/oid4vc-haip/issues/142)
+
+## ISO mdoc specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
+
+Requirements for both the Wallet and the Verifier:
+
+* The Credential Format Identifier MUST be `mso_mdoc`.
+* ISO mdoc Credential Format specific DCQL parameters as defined in Annex B.3.1 of [@!OIDF.OID4VP] MUST be used.
+* Verifier MAY request more than one Credential in the same request.
+* When multiple ISO mdocs are being returned, each ISO mdoc MUST be returned in a separate `DeviceResponse` (as defined in 8.3.2.1.2.2 of [@!ISO.18013-5]), each matching to a respective DCQL query. Therefore, the resulting `vp_token` contains multiple `DeviceResponse` instances.
+* The `SessionTranscript` and `Handover` CBOR structures MUST be generated in accordance with Annex B.3.4.1 of [@!OIDF.OID4VP].
+
+## IETF SD-JWT VC specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
+
+Requirements for both the Wallet and the Verifier:
+
+* The Credential Format identifier MUST be `dc+sd-jwt`.
+* IETF SD-JWT VC Credential Format specific DCQL parameters as defined in Section 6.4.1 of [@!OIDF.OID4VP] MUST be used.
 
 # Self-Issued OP v2
 
