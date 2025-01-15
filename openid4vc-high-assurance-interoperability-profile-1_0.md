@@ -216,8 +216,7 @@ Requirements for both the Wallet and the Verifier:
    * Authorization Request MUST be sent using the `request_uri` parameter as defined in JWT-Secured Authorization Request (JAR) [@!RFC9101].
    * The Client Identifier Scheme as introduced in Section 5.10 of [@!OIDF.OID4VP] MUST be either `x509_san_dns` or `verifier_attestation`. The Wallet MUST support both. The Verifier MUST support at least one.
    * To obtain the issuer's public key for verification, verifiers MUST support Web-based key resolution, as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
-   * The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Below is the list of features in the DCQL query and response that MUST be supported:
-     * tbd (https://github.com/openid/oid4vc-haip/issues/142)
+   * The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used.
 
 # OpenID for Verifiable Presentations over W3C Digital Credentials API
 
@@ -228,8 +227,7 @@ The following requirements apply for both, the Wallet and the Verifier, unless s
 * Wallet Invocation is done via the W3C Digital Credentials API or an equivalent platform API. Any other mechanism, including Custom URL schemes, MUST NOT be used.
 * Response Mode MUST be `dc_api.jwt`. The response MUST be encrypted.
 * Specific requirements for the response encryption are tbd (https://github.com/openid/oid4vc-haip/issues/131).
-* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DCQL query and response that MUST be supported:
-  * tbd (https://github.com/openid/oid4vc-haip/issues/142)
+* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used.
 
 ## ISO mdoc specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
