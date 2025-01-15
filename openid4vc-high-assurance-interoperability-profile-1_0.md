@@ -1,28 +1,28 @@
 %%%
-title = "OpenID4VC High Assurance Interoperability Profile with SD-JWT VC - draft 00"
-abbrev = "openid4vc-high-assurance-interoperability-profile-sd-jwt-vc"
+title = "OpenID4VC High Assurance Interoperability Profile - draft 01"
+abbrev = "openid4vc-high-assurance-interoperability-profile"
 ipr = "none"
 workgroup = "Digital Credentials Protocols"
-keyword = ["security", "openid4vc", "sd-jwt", "sd-jwt-vc"]
+keyword = ["security", "openid4vc", "sd-jwt", "sd-jwt-vc", "mdoc"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "openid4vc-high-assurance-interoperability-profile-sd-jwt-vc-1_0-00"
+value = "openid4vc-high-assurance-interoperability-profile-1_0-01"
 status = "standard"
 
 [[author]]
 initials="K."
 surname="Yasuda"
 fullname="Kristina Yasuda"
-organization="Microsoft"
+organization="SPRIND"
    [author.address]
-   email = "kristina.yasuda@microsoft.com"
+   email = "kristina.yasuda@sprind.org"
 
 [[author]]
 initials="T."
 surname="Lodderstedt"
 fullname="Torsten Lodderstedt"
-organization="sprind.org"
+organization="SPRIND"
    [author.address]
    email = "torsten@lodderstedt.net"
 
@@ -30,7 +30,7 @@ organization="sprind.org"
 
 .# Abstract
 
-This document defines a profile of OpenID for Verifiable Credentials in combination with the credential format SD-JWT VC. The aim is to select features and to define a set of requirements for the existing specifications to enable interoperability among Issuers, Wallets and Verifiers of Credentials where a high level of security and privacy is required. The profiled specifications include OpenID for Verifiable Credential Issuance [@!OIDF.OID4VCI], OpenID for Verifiable Presentations [@!OIDF.OID4VP], Self-Issued OpenID Provider v2 [@!OIDF.SIOPv2], and SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc].
+This document defines a profile of OpenID for Verifiable Credentials in combination with the credential formats IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc] and ISO mdoc [@!ISO.18013-5]. The aim is to select features and to define a set of requirements for the existing specifications to enable interoperability among Issuers, Wallets and Verifiers of Credentials where a high level of security and privacy is required. The profiled specifications include OpenID for Verifiable Credential Issuance [@!OIDF.OID4VCI], OpenID for Verifiable Presentations [@!OIDF.OID4VP], Self-Issued OpenID Provider v2 [@!OIDF.SIOPv2], IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc], and ISO mdoc [@!ISO.18013-5].
 
 {mainmatter}
 
@@ -40,13 +40,13 @@ This document defines a set of requirements for the existing specifications to e
 
 This document is not a specification, but a profile. It refers to the specifications required for implementations to interoperate among each other and for the optionalities mentioned in the referenced specifications, defines the set of features to be mandatory to implement.
 
-The profile uses OpenID for Verifiable Credential Issuance [@!OIDF.OID4VCI] and OpenID for Verifiable Presentations [@!OIDF.OID4VP] as the base protocols for issuance and presentation of Credentials, respectively. The credential format used is SD-JWT VC as specified in [@!I-D.ietf-oauth-sd-jwt-vc]. Additionally, considerations are given on how deployments can perform a combined issuance of credentials in both SD-JWT VC and ISO mdoc [@ISO.18013-5] formats.
+The profile uses OpenID for Verifiable Credential Issuance [@!OIDF.OID4VCI] and OpenID for Verifiable Presentations [@!OIDF.OID4VP] as the base protocols for issuance and presentation of Credentials, respectively. The credential formats used are IETF SD-JWT VC as specified in [@!I-D.ietf-oauth-sd-jwt-vc] and ISO mdoc [@!ISO.18013-5]. Additionally, considerations are given on how the issuance of Credentials in both IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc] and ISO mdoc [@ISO.18013-5] formats can be performed in the same transaction.
 
 A full list of the open standards used in this profile can be found in Overview of the Open Standards Requirements (reference).
 
 ## Audience Target audience/Usage
 
-The audience of the document is implementers that require a high level of security and privacy for their solutions. A non-exhaustive list of the interested parties includes eIDAS 2.0, California Department of Motor Vehicles, Open Wallet Foundation (OWF), IDunion, GAIN, and the Trusted Web project of the Japanese government, but is expected to grow to include other jurisdictions and private sector companies.
+The audience of the document is implementers that require a high level of security and privacy for their solutions. A non-exhaustive list of the interested parties includes [eIDAS 2.0](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401183), [California Department of Motor Vehicles](https://www.dmv.ca.gov/portal/), [Open Wallet Foundation (OWF)](https://openwallet.foundation/), [IDunion](https://idunion.org/?lang=en), [GAIN](https://gainforum.org/), and [the Trusted Web project of the Japanese government](https://trustedweb.go.jp/en), but is expected to grow to include other jurisdictions and private sector companies.
 
 # Terminology
 
@@ -56,16 +56,21 @@ This specification uses the terms "Holder", "Issuer", "Verifier", "Wallet", and 
 
 The following aspects are in scope of this interoperability profile:
 
-* Protocol for issuance of the Verifiable Credentials (can be both remote and in-person) (OID4VCI)
-* Protocol for online presentation of Verifiable Credentials (can be both remote and in-person) (OID4VP)
+* Profile of OpenID4VCI to issue IETF SD-JWT VCs, including
+  * Wallet Attestation
+* Profile of OpenID4VP to present IETF SD-JWT VCs
+* Profile of OpenID4VP over the W3C Digital Credentials API [@w3c.digital_credentials_api] to present 
+  * IETF SD-JWT VCs 
+  * ISO mdocs
 * Protocol for User Authentication by the Wallet at a Verifier (SIOP v2)
-* Wallet Attestation (during Credential issuance)
-* Credential Format (SD-JWT VC)
-* Status Management of the Credentials, including revocation
-* Cryptographic Holder Binding
-* Issuer key resolution
-* Issuer identification (as prerequisite for trust management)
+* Profile of IETF SD-JWT VC that includes the following aspects
+  * Status management of the Credentials, including revocation
+  * Cryptographic Key Binding
+  * Issuer key resolution
+  * Issuer identification (as prerequisite for trust management)
 * Crypto Suites
+
+Note that when OpenID4VP is used, the Wallet and the Verifier can either be remote or in-person.
 
 Assumptions made are the following:
 
@@ -79,6 +84,9 @@ The following items are out of scope for the current version of this document, b
 
 * Trust Management, i.e. authorization of an issuer to issue certain types of credentials, authorization of the Wallet to be issued certain types of credentials, authorization of  the Verifier to receive certain types of credentials.
 * Protocol for presentation of Verifiable Credentials for offline use-cases, e.g. over BLE.
+* Profile of OpenID4VCI to issue ISO mdoc [@!ISO.18013-5] is defined in ISO 23220-3.
+* Profile of OpenID4VP without using W3C Digital Credentials API to present ISO mdocs is 
+defined in [@ISO.18013-7]. For more details, also see Annex B.3 in [@!OIDF.OID4VP].
 
 ## Scenarios/Business Requirements
 
@@ -88,20 +96,20 @@ The following items are out of scope for the current version of this document, b
 
 ## Standards Requirements
 
-Unless explicitly stated, all normative requirements apply to all participating entities: Issuers, Wallets and Verifiers.
+This specification enables interoperable implementations of the following flows:
 
-| (as defined in this profile) | Issuer | Wallet | Verifier |
-|:--- |:--- |:--- |:--- |
-|OID4VP| N/A |MUST|MUST|
-|OID4VCI| MUST|MUST|N/A|
-|SIOPv2|N/A|MUST|SHOULD|
-|SD-JWT VC profile as defined in (#sd-jwt-vc) |MUST|MUST|MUST|
+* Issuance of IETF SD-JWT VC using OpenID4VCI
+* Presentation of IETF SD-JWT VC using OpenID4VP
+* Presentation of IETF SD-JWT VC using OpenID4VP over W3C Digital Credentials API
+* Presentation of ISO mdocs using OpenID4VP over W3C Digital Credentials API
+
+Implementations of this specification do not have to implement all of the flows listed above, but they MUST be compliant to all of the requirements for a particular flow they chose to implement.
 
 # OpenID for Verifiable Credential Issuance
 
-Implementations of this profile:
+Both the Wallet and the Credential Issuer:
 
-* MUST support both pre-auth code flow and authorization code flow.
+* MUST support both pre-authorized code flow and authorization code flow.
 * MUST support protocol extensions for the SD-JWT VC credential format profile as defined in (#vc_sd_jwt_profile).
 * MUST support sender-constrained tokens using the mechanism defined in [@!RFC9449].
 * MUST support [@!RFC7636] with `S256` as the code challenge method.
@@ -120,17 +128,16 @@ Both sending Credential Offer same-device and cross-device is supported.
 
 ## Authorization Endpoint
 
-   * MUST use Pushed Authorization Requests (PAR) [@!RFC9126] to send the Authorization Request.
-   * Wallets MUST authenticate itself at the PAR endpoint using the same rules as defined in (#token-endpoint) for client authentication at the token endpoint.
-   * MUST use the `scope` parameter to communicate credential type(s) to be issued. The scope value MUST map to a specific Credential type. The scope value may be pre-agreed, obtained from the Credential Offer, or the Credential Issuer Metadata.
-   * The `client_id` value in the PAR request MUST be a string that the Wallet has used as the `sub` value in the client attestation JWT.
+* MUST use Pushed Authorization Requests (PAR) [@!RFC9126] to send the Authorization Request.
+* Wallets MUST authenticate itself at the PAR endpoint using the same rules as defined in (#token-endpoint) for client authentication at the token endpoint.
+* MUST use the `scope` parameter to communicate credential type(s) to be issued. The scope value MUST map to a specific Credential type. The scope value may be pre-agreed, obtained from the Credential Offer, or the Credential Issuer Metadata.
+* The `client_id` value in the PAR request MUST be a string that the Wallet has used as the `sub` value in the client attestation JWT.
 
 ## Token Endpoint {#token-endpoint}
 
-   * The Wallets MUST perform client authentication as defined in [@!I-D.ietf-oauth-attestation-based-client-auth].
-   * Refresh tokens MUST be supported for credential refresh.
-   * Wallets MUST support deferred authorization by being able to process the Token error response parameters `authorization_pending` and `slow_down`, and the credential offer parameter `interval`.
-   * The Wallet Attestation JWT scheme is defined in (#wallet-attestation-schema).
+* The Wallets MUST perform client authentication as defined in [@!I-D.ietf-oauth-attestation-based-client-auth].
+* Refresh tokens are RECOMMENDED to be supported for credential refresh. For details, see Section 13.5 in [@!OIDF.OID4VCI].
+* The Wallet Attestation JWT scheme is defined in (#wallet-attestation-schema).
 
 Note: It is RECOMMENDED to use ephemeral client attestation JWTs for client authentication in order to prevent linkability across Credential Issuers.
 
@@ -193,13 +200,13 @@ This is an example of a Wallet Instance Attestation:
 
 ## Credential Endpoint
 
-   * The `JWT` proof type MUST be supported.
+* The `JWT` proof type MUST be supported.
 
 ## Server Metadata
 
 * The Credential Issuer MUST publish a mapping of every Credential Type it supports to a scope value.
 
-# OpenID for Verifiable Presentations
+# OpenID for Verifiable Presentations profile for IETF SD-JWT VC
 
    * MUST support protocol extensions for SD-JWT VC credential format profile as defined in this specification (#vc_sd_jwt_profile).
    * As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the Wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
@@ -212,10 +219,6 @@ This is an example of a Wallet Instance Attestation:
    * Presentation Definition JSON object MUST be sent using a `presentation_definition` parameter.
    * The following features from the DIF Presentation Exchange v2.0.0 MUST be supported. A JSON schema for the supported features is in (#presentation-definition-schema):
 
-    * In the `presentation_definition` object, `id`, `input_descriptors` and `submission_requirements` properties MUST be supported.
-    * In the `input-descriptors` object, `id`, `name`, `purpose`, `group`, `format`, and `constraints` properties MUST be supported. In the `constraints` object, `limit_disclosure`, and `fields` properties MUST be supported. In the `fields` object, `path` and `filter` properties MUST be supported. A `path` MUST contain exactly one entry with a static path to a certain claim. A `filter` MUST only contain `type` elements of value `string` and `const` elements.
-    * In the `submission_requirements` object, `name`, `rule (`pick` only)`, `count`, `from` properties MUST be supported.
-
 # Self-Issued OP v2
 
 To authenticate the user, subject identifier in a Self-Issued ID Token MUST be used as defined in [@!OIDF.SIOPv2].
@@ -225,9 +228,7 @@ To authenticate the user, subject identifier in a Self-Issued ID Token MUST be u
 
 # SD-JWT VCs {#sd-jwt-vc}
 
-As credential format, SD-JWT VCs as defined in [@!I-D.ietf-oauth-sd-jwt-vc] MUST be used.
-
-In addition, this profile defines the following additional requirements.
+This profile defines the following additional requirements for IETF SD-JWT VCs as defined in [@!I-D.ietf-oauth-sd-jwt-vc].
 
 * Compact serialization MUST be supported as defined in [@!I-D.ietf-oauth-selective-disclosure-jwt]. JSON serialization MAY be supported.
 * The following JWT Claims MUST be supported Content (differentiate issuance & presentation)
@@ -385,6 +386,41 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
         </front>
 </reference>
 
+<reference anchor="ISO.18013-7" target="https://www.iso.org/standard/82772.html">
+        <front>
+          <title>ISO/IEC DTS 18013-7 Personal identification — ISO-compliant driving license — Part 7: Mobile driving license (mDL) add-on functions</title>
+          <author>
+            <organization> ISO/IEC JTC 1/SC 17 Cards and security devices for personal identification</organization>
+          </author>
+          <date year="2024"/>
+        </front>
+</reference>
+
+<reference anchor="ISO.23220-3" target="https://www.iso.org/standard/79125.html">
+        <front>
+          <title>ISO/IEC DTS 23220-3 Cards and security devices for personal identification — Building blocks for identity management via mobile devices</title>
+          <author>
+            <organization> ISO/IEC JTC 1/SC 17 Cards and security devices for personal identification</organization>
+          </author>
+          <date year="2023"/>
+        </front>
+</reference>
+
+<reference anchor="w3c.digital_credentials_api" target="https://wicg.github.io/digital-credentials/">
+        <front>
+          <title>Digital Credentials API</title>
+		  <author fullname="Marcos Caceres">
+            <organization>Apple Inc.</organization>
+          </author>
+          <author fullname="Sam Goto">
+            <organization>Google</organization>
+          </author>
+          <author fullname="Tim Cappalli">
+            <organization>Okta</organization>
+          </author>
+        </front>
+</reference>
+
 <reference anchor="VC-DATA" target="https://www.w3.org/TR/vc-data-model-2.0/">
         <front>
         <title>Verifiable Credentials Data Model v2.0</title>
@@ -403,7 +439,7 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
 
 # Combined Issuance of SD-JWT VC and mdocs
 
-   * If combined issuance is required, the Batch Credential Endpoint MUST be supported.
+* If combined issuance is required, the Batch Credential Endpoint MUST be supported.
 
 # JSON Schema for the supported Presentation Definition properties {#presentation-definition-schema}
 
@@ -420,3 +456,22 @@ Copyright (c) 2023 The OpenID Foundation.
 The OpenID Foundation (OIDF) grants to any Contributor, developer, implementer, or other interested party a non-exclusive, royalty free, worldwide copyright license to reproduce, prepare derivative works from, distribute, perform and display, this Implementers Draft or Final Specification solely for the purposes of (i) developing specifications, and (ii) implementing Implementers Drafts and Final Specifications based on such documents, provided that attribution be made to the OIDF as the source of the material, but that such attribution does not indicate an endorsement by the OIDF.
 
 The technology described in this specification was made available from contributions from various sources, including members of the OpenID Foundation and others. Although the OpenID Foundation has taken steps to help ensure that the technology is available for distribution, it takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this specification or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any independent effort to identify any such rights. The OpenID Foundation and the contributors to this specification make no (and hereby expressly disclaim any) warranties (express, implied, or otherwise), including implied warranties of merchantability, non-infringement, fitness for a particular purpose, or title, related to this specification, and the entire risk as to implementing this specification is assumed by the implementer. The OpenID Intellectual Property Rights policy requires contributors to offer a patent promise not to assert certain patent claims against other contributors and against implementers. The OpenID Foundation invites any interested party to bring to its attention any copyrights, patents, patent applications, or other proprietary rights that MAY cover technology that MAY be required to practice this specification.
+
+# Document History
+
+   [[ To be removed from the final specification ]]
+
+   -02
+
+   * Add SessionTranscript requirements
+   
+   -01
+
+   * Rename specification to enable non-SD-JWT credential formats to be included
+   * Require encrypted responses
+   * Remove reference to `client_id_scheme` parameter that no longer exists in OpenID4VP
+   * Refresh tokens are now optional
+
+   -00
+
+   *  initial revision
