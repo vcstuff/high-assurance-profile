@@ -208,7 +208,6 @@ This is an example of a Wallet Instance Attestation:
 
 # OpenID for Verifiable Presentations profile for IETF SD-JWT VC
 
-
 Requirements for both the Wallet and the Verifier:
 
 * As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
