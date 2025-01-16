@@ -357,7 +357,6 @@ For backward compatibility with JWT processors, the following registered JWT cla
 * `iss` Claim MUST represent the `issuer` property.
 * `iat` Claim MUST represent `issuanceDate` property, encoded as a UNIX timestamp (NumericDate).
 * `status` Claim MUST represent `credentialStatus` property.
-* `schema` Claim MUST represent the `credentialSchema` property.
 * `sub` Claim MUST represent the `id` property of `credentialSubject` property.
 
 IETF SD-JWT VC is extended with the following claims:
