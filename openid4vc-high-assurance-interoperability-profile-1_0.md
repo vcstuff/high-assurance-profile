@@ -345,7 +345,11 @@ A Credential Format Profile for Credentials complying with IETF SD-JWT VCs [@!I-
 
 ## SD-JWT VC Data Model (SD-JWT VCDM)
 
-SD-JWT VCDM is a data model that follows IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc], but allows the usage of [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0]. When IETF SD-JWT VC is mentioned in this specification, SD-JWT VCDM define in this section MAY be used.
+SD-JWT VCDM is a credential format that is compliant to IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc] that allows the usage of existing data structures represented using [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0], while enabling selective disclosure.
+
+SD-JWT VCDM credentials contain a data structure that can be processed using a JSON-LD processor after applying SD-JWT processing.
+
+When IETF SD-JWT VC is mentioned in this specification, SD-JWT VCDM defined in this section MAY be used.
 
 For backward compatibility with JWT processors, the following registered JWT claims MUST be used, instead of their respective counterpart properties in [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0]:
 
