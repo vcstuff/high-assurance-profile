@@ -7,7 +7,7 @@ keyword = ["security", "openid4vc", "sd-jwt", "sd-jwt-vc", "mdoc"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "openid4vc-high-assurance-interoperability-profile-1_0-01"
+value = "openid4vc-high-assurance-interoperability-profile-1_0-02"
 status = "standard"
 
 [[author]]
@@ -59,8 +59,8 @@ The following aspects are in scope of this interoperability profile:
 * Profile of OpenID4VCI to issue IETF SD-JWT VCs, including
   * Wallet Attestation
 * Profile of OpenID4VP to present IETF SD-JWT VCs
-* Profile of OpenID4VP over the W3C Digital Credentials API [@w3c.digital_credentials_api] to present 
-  * IETF SD-JWT VCs 
+* Profile of OpenID4VP over the W3C Digital Credentials API [@w3c.digital_credentials_api] to present
+  * IETF SD-JWT VCs
   * ISO mdocs
 * Protocol for User Authentication by the Wallet at a Verifier (SIOP v2)
 * Profile of IETF SD-JWT VC that includes the following aspects
@@ -85,7 +85,7 @@ The following items are out of scope for the current version of this document, b
 * Trust Management, i.e. authorization of an issuer to issue certain types of credentials, authorization of the Wallet to be issued certain types of credentials, authorization of  the Verifier to receive certain types of credentials.
 * Protocol for presentation of Verifiable Credentials for offline use-cases, e.g. over BLE.
 * Profile of OpenID4VCI to issue ISO mdoc [@!ISO.18013-5] is defined in ISO 23220-3.
-* Profile of OpenID4VP without using W3C Digital Credentials API to present ISO mdocs is 
+* Profile of OpenID4VP without using W3C Digital Credentials API to present ISO mdocs is
 defined in [@ISO.18013-7]. For more details, also see Annex B.3 in [@!OIDF.OID4VP].
 
 ## Scenarios/Business Requirements
@@ -230,7 +230,9 @@ The following requirements apply for both, the Wallet and the Verifier, unless s
   * The Wallet MUST support both signed and unsigned requests as defined in Annex A.3.1 and A.3.2 of [@!OIDF.OID4VP]. The Verifier MAY support signed requests, unsigned requests, or both.
 * Wallet Invocation is done via the W3C Digital Credentials API or an equivalent platform API. Any other mechanism, including Custom URL schemes, MUST NOT be used.
 * Response Mode MUST be `dc_api.jwt`. The response MUST be encrypted.
-* Specific requirements for the response encryption are tbd (https://github.com/openid/oid4vc-haip/issues/131).
+* Response encryption MUST be performed as specified in [@!OIDF.OID4VP, section 7.3]. The JWE `alg` (algorithm) header parameter (see [@!RFC7516, section 4.1.1])
+  value `ECDH-ES` (as defined in [@!RFC7518, section 4.6]), with key agreement utilizing keys on the `P-256` curve (see [@!RFC7518, section 6.2.1.1]) MUST be supported.
+  The JWE `enc` (encryption algorithm) header parameter (see [@!RFC7516, section 4.1.2]) value `A128GCM` (as defined in [@!RFC7518, section 5.3]) MUST be supported.
 * The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DCQL query and response that MUST be supported:
   * tbd (https://github.com/openid/oid4vc-haip/issues/142)
 
@@ -495,8 +497,9 @@ The technology described in this specification was made available from contribut
 
    -02
 
+   * Add specific requirements for response encryption
    * Add SessionTranscript requirements
-   
+
    -01
 
    * Rename specification to enable non-SD-JWT credential formats to be included
