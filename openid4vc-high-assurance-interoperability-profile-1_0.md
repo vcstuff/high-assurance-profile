@@ -122,7 +122,7 @@ Both Wallet initiated and Issuer initiated issuance is supported.
 * For Grant Type `authorization_code`, the Issuer MUST include a scope value in order to allow the Wallet to identify the desired Credential Type. The wallet MUST use that value in the `scope` Authorization parameter.
 * As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
 
-Note: The Authorization Code flow does not require a Credential Offer from the Issuer to the Wallet. However, it is included in the feature set to allow for issuer initiated credential issuance.
+Note: The Authorization Code flow does not require a Credential Offer from the Issuer to the Wallet. However, it is included in the feature set to allow for Issuer initiated Credential issuance.
 
 Both sending Credential Offer same-device and cross-device is supported.
 
