@@ -511,6 +511,7 @@ The technology described in this specification was made available from contribut
    * Refactor HAIP and add details for mdoc profile over DC API
    * Add specific requirements for response encryption
    * Add SessionTranscript requirements
+   * Update OID4VP reference to draft 24
 
    -01
 
