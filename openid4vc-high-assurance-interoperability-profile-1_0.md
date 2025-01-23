@@ -216,11 +216,7 @@ Requirements for both the Wallet and the Verifier:
 * Authorization Request MUST be sent using the `request_uri` parameter as defined in JWT-Secured Authorization Request (JAR) [@!RFC9101].
 * The Client Identifier Scheme as introduced in Section 5.10 of [@!OIDF.OID4VP] MUST be either `x509_san_dns` or `verifier_attestation`. The Wallet MUST support both. The Verifier MUST support at least one.
 * To obtain the issuer's public key for verification, verifiers MUST support Web-based key resolution, as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
-* Presentation Definition JSON object MUST be sent using a `presentation_definition` parameter.
-* The following features from the DIF Presentation Exchange v2.0.0 MUST be supported. A JSON schema for the supported features is in (#presentation-definition-schema):
-  * In the `presentation_definition` object, `id`, `input_descriptors` and `submission_requirements` properties MUST be supported.
-  * In the `input-descriptors` object, `id`, `name`, `purpose`, `group`, `format`, and `constraints` properties MUST be supported. In the `constraints` object, `limit_disclosure`, and `fields` properties MUST be supported. In the `fields` object, `path` and `filter` properties MUST be supported. A `path` MUST contain exactly one entry with a static path to a certain claim. A `filter` MUST only contain `type` elements of value `string` and `const` elements.
-  * In the `submission_requirements` object, `name`, `rule (`pick` only)`, `count`, `from` properties MUST be supported.
+* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used.
 
 # OpenID for Verifiable Presentations over W3C Digital Credentials API
 
@@ -233,8 +229,8 @@ The following requirements apply for both, the Wallet and the Verifier, unless s
 * Response encryption MUST be performed as specified in [@!OIDF.OID4VP, section 7.3]. The JWE `alg` (algorithm) header parameter (see [@!RFC7516, section 4.1.1])
   value `ECDH-ES` (as defined in [@!RFC7518, section 4.6]), with key agreement utilizing keys on the `P-256` curve (see [@!RFC7518, section 6.2.1.1]) MUST be supported.
   The JWE `enc` (encryption algorithm) header parameter (see [@!RFC7516, section 4.1.2]) value `A128GCM` (as defined in [@!RFC7518, section 5.3]) MUST be supported.
-* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DCQL query and response that MUST be supported:
-  * tbd (https://github.com/openid/oid4vc-haip/issues/142)
+* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used.
+
 
 ## ISO mdoc specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
@@ -475,10 +471,6 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
 
 * If combined issuance is required, the Batch Credential Endpoint MUST be supported.
 
-# JSON Schema for the supported Presentation Definition properties {#presentation-definition-schema}
-
-<{{schemas/presentation_definition.json}}
-
 # Acknowledgements {#Acknowledgements}
 
 We would like to thank Paul Bastian, Christian Bormann, Mike Jones, Oliver Terbu, Daniel Fett, and Giuseppe De Marco for their valuable feedback and contributions to this specification.
@@ -497,6 +489,8 @@ The technology described in this specification was made available from contribut
 
    -02
 
+   * Mandate DCQL instead of presentation exchange
+   * Refactor HAIP and add details for mdoc profile over DC API
    * Add specific requirements for response encryption
    * Add SessionTranscript requirements
 
