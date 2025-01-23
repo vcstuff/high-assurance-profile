@@ -379,7 +379,7 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
         <author initials="T." surname="Looker" fullname="Tobias Looker">
           <organization>Mattr</organization>
         </author>
-       <date day="xx" month="January" year="2025"/>
+       <date day="23" month="January" year="2025"/>
       </front>
 </reference>
 
