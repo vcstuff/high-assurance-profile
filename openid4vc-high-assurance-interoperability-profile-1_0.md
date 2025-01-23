@@ -496,6 +496,7 @@ The technology described in this specification was made available from contribut
 
    * Add specific requirements for response encryption
    * Add SessionTranscript requirements
+   * Update OID4VP reference to draft 24
 
    -01
 
