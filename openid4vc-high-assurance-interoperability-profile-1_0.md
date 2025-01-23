@@ -142,11 +142,11 @@ Note: It is RECOMMENDED to use ephemeral client attestation JWTs for client auth
 
 Note: Issuers should be mindful of how long the usage of the refresh token is allowed to refresh a credential, as opposed to starting the issuance flow from the beginning. For example, if the User is trying to refresh a credential more than a year after its original issuance, the usage of the refresh tokens is NOT RECOMMENDED.
 
-### Wallet Attestation Schema {#wallet-attestation}
+### Wallet Attestation {#wallet-attestation}
 
-Wallets MUST use wallet attestations as defined in Annex D of [@!OIDF.OID4VCI].
+Wallets MUST use wallet attestations as defined in Annex E of [@!OIDF.OID4VCI].
 
-To obtain the issuer's Public key for verification, wallet attestions MUST support web-based key resolution as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
+To obtain the issuer's Public key for verification, Wallet Attestions MUST support web-based key resolution as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
 
 ## Credential Endpoint
 
