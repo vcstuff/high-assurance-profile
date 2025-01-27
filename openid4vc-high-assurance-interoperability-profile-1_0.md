@@ -7,7 +7,7 @@ keyword = ["security", "openid4vc", "sd-jwt", "sd-jwt-vc", "mdoc"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "openid4vc-high-assurance-interoperability-profile-1_0-01"
+value = "openid4vc-high-assurance-interoperability-profile-1_0-02"
 status = "standard"
 
 [[author]]
@@ -50,7 +50,7 @@ The audience of the document is implementers that require a high level of securi
 
 # Terminology
 
-This specification uses the terms "Holder", "Issuer", "Verifier", and "Verifiable Credential" as defined in [@!I-D.ietf-oauth-sd-jwt-vc].
+This specification uses the terms "Holder", "Issuer", "Verifier", "Wallet", and "Verifiable Credential" as defined in @!OIDF.OID4VCI] and [@!OIDF.OID4VP].
 
 # Scope
 
@@ -59,8 +59,8 @@ The following aspects are in scope of this interoperability profile:
 * Profile of OpenID4VCI to issue IETF SD-JWT VCs, including
   * Wallet Attestation
 * Profile of OpenID4VP to present IETF SD-JWT VCs
-* Profile of OpenID4VP over the W3C Digital Credentials API [@w3c.digital_credentials_api] to present 
-  * IETF SD-JWT VCs 
+* Profile of OpenID4VP over the W3C Digital Credentials API [@w3c.digital_credentials_api] to present
+  * IETF SD-JWT VCs
   * ISO mdocs
 * Protocol for User Authentication by the Wallet at a Verifier (SIOP v2)
 * Profile of IETF SD-JWT VC that includes the following aspects
@@ -74,8 +74,8 @@ Note that when OpenID4VP is used, the Wallet and the Verifier can either be remo
 
 Assumptions made are the following:
 
-* The issuers and verifiers cannot pre-discover wallet’s capability
-* The issuer is talking to the wallet supporting the features defined in this profile (via wallet invocation mechanism)
+* The issuers and verifiers cannot pre-discover Wallet’s capability
+* The issuer is talking to the Wallet supporting the features defined in this profile (via Wallet invocation mechanism)
 * There are mechanisms in place for the verifiers and issuers to discover each other’s capability
 
 ## Out of Scope
@@ -85,7 +85,7 @@ The following items are out of scope for the current version of this document, b
 * Trust Management, i.e. authorization of an issuer to issue certain types of credentials, authorization of the Wallet to be issued certain types of credentials, authorization of  the Verifier to receive certain types of credentials.
 * Protocol for presentation of Verifiable Credentials for offline use-cases, e.g. over BLE.
 * Profile of OpenID4VCI to issue ISO mdoc [@!ISO.18013-5] is defined in ISO 23220-3.
-* Profile of OpenID4VP without using W3C Digital Credentials API to present ISO mdocs is 
+* Profile of OpenID4VP without using W3C Digital Credentials API to present ISO mdocs is
 defined in [@ISO.18013-7]. For more details, also see Annex B.3 in [@!OIDF.OID4VP].
 
 ## Scenarios/Business Requirements
@@ -109,7 +109,7 @@ Implementations of this specification do not have to implement all of the flows 
 
 Both the Wallet and the Credential Issuer:
 
-* MUST support both pre-authorized code flow and authorization code flow.
+* MUST support the authorization code flow.
 * MUST support protocol extensions for the SD-JWT VC credential format profile as defined in (#vc_sd_jwt_profile).
 * MUST support sender-constrained tokens using the mechanism defined in [@!RFC9449].
 * MUST support [@!RFC7636] with `S256` as the code challenge method.
@@ -118,26 +118,26 @@ Both Wallet initiated and Issuer initiated issuance is supported.
 
 ## Credential Offer
 
-* The Grant Types `authorization_code` and `urn:ietf:params:oauth:grant-type:pre-authorized_code` MUST be supported as defined in Section 4.1.1 in [@!OIDF.OID4VCI]
-* For Grant Type `authorization_code`, the Issuer MUST include a scope value in order to allow the Wallet to identify the desired credential type. The wallet MUST use that value in the `scope` Authorization parameter. For Grant Type `urn:ietf:params:oauth:grant-type:pre-authorized_code`, the pre-authorized code is used by the issuer to identify the credential type(s).
-* As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
+* The Grant Type `authorization_code` MUST be supported as defined in Section 4.1.1 in [@!OIDF.OID4VCI]
+* For Grant Type `authorization_code`, the Issuer MUST include a scope value in order to allow the Wallet to identify the desired Credential Type. The Wallet MUST use that value in the `scope` Authorization parameter.
+* As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the Wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
 
-Note: The Authorization Code flow does not require a Credential Offer from the Issuer to the Wallet. However, it is included in the feature set of the Credential Offer because it might be easier to implement with existing libraries and on top of existing implementations than the pre-authorized code Grant Type.
+Note: The Authorization Code flow does not require a Credential Offer from the Issuer to the Wallet. However, it is included in the feature set to allow for Issuer initiated Credential issuance.
 
 Both sending Credential Offer same-device and cross-device is supported.
 
 ## Authorization Endpoint
 
-   * MUST use Pushed Authorization Requests (PAR) [@!RFC9126] to send the Authorization Request.
-   * Wallets MUST authenticate itself at the PAR endpoint using the same rules as defined in (#token-endpoint) for client authentication at the token endpoint.
-   * MUST use the `scope` parameter to communicate credential type(s) to be issued. The scope value MUST map to a specific Credential type. The scope value may be pre-agreed, obtained from the Credential Offer, or the Credential Issuer Metadata.
-   * The `client_id` value in the PAR request MUST be a string that the Wallet has used as the `sub` value in the client attestation JWT.
+* MUST use Pushed Authorization Requests (PAR) [@!RFC9126] to send the Authorization Request.
+* Wallets MUST authenticate itself at the PAR endpoint using the same rules as defined in (#token-endpoint) for client authentication at the token endpoint.
+* MUST use the `scope` parameter to communicate credential type(s) to be issued. The scope value MUST map to a specific Credential type. The scope value may be pre-agreed, obtained from the Credential Offer, or the Credential Issuer Metadata.
+* The `client_id` value in the PAR request MUST be a string that the Wallet has used as the `sub` value in the client attestation JWT.
 
 ## Token Endpoint {#token-endpoint}
 
-   * The Wallets MUST perform client authentication as defined in (#wallet-attestation).
-   * Refresh tokens are RECOMMENDED to be supported for credential refresh. For details, see Section 13.5 in [@!OIDF.OID4VCI].
-   
+* The Wallets MUST perform client authentication as defined in (#wallet-attestation).
+* Refresh tokens are RECOMMENDED to be supported for credential refresh. For details, see Section 13.5 in [@!OIDF.OID4VCI].
+
 Note: It is RECOMMENDED to use ephemeral client attestation JWTs for client authentication in order to prevent linkability across Credential Issuers.
 
 Note: Issuers should be mindful of how long the usage of the refresh token is allowed to refresh a credential, as opposed to starting the issuance flow from the beginning. For example, if the User is trying to refresh a credential more than a year after its original issuance, the usage of the refresh tokens is NOT RECOMMENDED.
@@ -150,7 +150,7 @@ The public key, and optionally a trust chain, used to validate the signature on 
 
 ## Credential Endpoint
 
-   * The `JWT` proof type MUST be supported.
+* The `JWT` proof type MUST be supported.
 
 ## Server Metadata
 
@@ -160,18 +160,13 @@ The public key, and optionally a trust chain, used to validate the signature on 
 
 Requirements for both the Wallet and the Verifier:
 
-   * As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
-   * Response type MUST be `vp_token`.
-   * Response mode MUST be `direct_post.jwt`. The Verifier MUST return `redirect_uri` in response to the HTTP POST request from the Wallet, where the Wallet redirects the User to, as defined in Section 7.2 of [@!OIDF.OID4VP]. Implementation considerations for the response mode `direct_post.jwt` are given in Section 12.4 of [@!OIDF.OID4VP].
-   * Authorization Request MUST be sent using the `request_uri` parameter as defined in JWT-Secured Authorization Request (JAR) [@!RFC9101].
-   * The Client Identifier Scheme as introduced in Section 5.10 of [@!OIDF.OID4VP] MUST be either `x509_san_dns` or `verifier_attestation`. The Wallet MUST support both. The Verifier MUST support at least one.
-   * To obtain the issuer's public key for verification, verifiers MUST support Web-based key resolution, as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
-   * Presentation Definition JSON object MUST be sent using a `presentation_definition` parameter.
-   * The following features from the DIF Presentation Exchange v2.0.0 MUST be supported. A JSON schema for the supported features is in (#presentation-definition-schema):
-
-    * In the `presentation_definition` object, `id`, `input_descriptors` and `submission_requirements` properties MUST be supported.
-    * In the `input-descriptors` object, `id`, `name`, `purpose`, `group`, `format`, and `constraints` properties MUST be supported. In the `constraints` object, `limit_disclosure`, and `fields` properties MUST be supported. In the `fields` object, `path` and `filter` properties MUST be supported. A `path` MUST contain exactly one entry with a static path to a certain claim. A `filter` MUST only contain `type` elements of value `string` and `const` elements.
-    * In the `submission_requirements` object, `name`, `rule (`pick` only)`, `count`, `from` properties MUST be supported.
+* As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
+* Response type MUST be `vp_token`.
+* Response mode MUST be `direct_post.jwt`. The Verifier MUST return `redirect_uri` in response to the HTTP POST request from the Wallet, where the Wallet redirects the User to, as defined in Section 7.2 of [@!OIDF.OID4VP]. Implementation considerations for the response mode `direct_post.jwt` are given in Section 12.4 of [@!OIDF.OID4VP].
+* Authorization Request MUST be sent using the `request_uri` parameter as defined in JWT-Secured Authorization Request (JAR) [@!RFC9101].
+* The Client Identifier Scheme as introduced in Section 5.10 of [@!OIDF.OID4VP] MUST be either `x509_san_dns` or `verifier_attestation`. The Wallet MUST support both. The Verifier MUST support at least one.
+* To obtain the issuer's public key for verification, verifiers MUST support Web-based key resolution, as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
+* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used.
 
 # OpenID for Verifiable Presentations over W3C Digital Credentials API
 
@@ -181,67 +176,34 @@ The following requirements apply for both, the Wallet and the Verifier, unless s
   * The Wallet MUST support both signed and unsigned requests as defined in Annex A.3.1 and A.3.2 of [@!OIDF.OID4VP]. The Verifier MAY support signed requests, unsigned requests, or both.
 * Wallet Invocation is done via the W3C Digital Credentials API or an equivalent platform API. Any other mechanism, including Custom URL schemes, MUST NOT be used.
 * Response Mode MUST be `dc_api.jwt`. The response MUST be encrypted.
-* Specific requirements for the response encryption are tbd (https://github.com/openid/oid4vc-haip/issues/131).
-* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DCQL query and response that MUST be supported:
-  * tbd (https://github.com/openid/oid4vc-haip/issues/142)
+* Response encryption MUST be performed as specified in [@!OIDF.OID4VP, section 7.3]. The JWE `alg` (algorithm) header parameter (see [@!RFC7516, section 4.1.1])
+  value `ECDH-ES` (as defined in [@!RFC7518, section 4.6]), with key agreement utilizing keys on the `P-256` curve (see [@!RFC7518, section 6.2.1.1]) MUST be supported.
+  The JWE `enc` (encryption algorithm) header parameter (see [@!RFC7516, section 4.1.2]) value `A128GCM` (as defined in [@!RFC7518, section 5.3]) MUST be supported.
+* The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used.
+
 
 ## ISO mdoc specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
 Requirements for both the Wallet and the Verifier:
 
-  * The Credential Format Identifier MUST be `mso_mdoc`.
-  * ISO mdoc Credential Format specific DCQL parameters as defined in Annex B.3.1 of [@!OIDF.OID4VP] MUST be used.
-  * Verifier MAY request more than one Credential in the same request.
-  * When multiple ISO mdocs are being returned, each ISO mdoc MUST be returned in a separate `DeviceResponse` (as defined in 8.3.2.1.2.2 of [@!ISO.18013-5]), each matching to a respective DCQL query. Therefore, the resulting `vp_token` contains multiple `DeviceResponse` instances.
-
-### Session Transcript
-
-The `SessionTranscript` as defined in Section 9.1.5.1 in [@ISO.18013-5] MUST be used with the following changes:
-
-* `DeviceEngagementBytes` MUST be null.
-* `EReaderKeyBytes` MUST be null.
-
-```
-SessionTranscript = [
-  null,
-  null,
-  Handover
-]
-```
-
-The `Handover` element is defined as following:
-
-```
-Handover = OID4VPDCAPIHandover
-OID4VPDCAPIHandover = [
-  "OID4VPDCAPIHandover"
-  clientId
-  origin
-  nonce
-]
-
-clientId = tstr ; using UTF-8
-origin = tstr ; using UTF-8
-nonce = tstr ; using UTF-8
-```
-
-* "OID4VPDCAPIHandover" is a string that identifies the type of handover structure as a security measure to prevent confusion of handovers.
-* `clientId` and `nonce` parameters in the Handover MUST be the `client_id` and `nonce` parameters included in the Authorization Request from the Verifier.
-* `origin` in the Handover is the origin of the Verifer, obtained from the Web-platform and/or app platform.
+* The Credential Format Identifier MUST be `mso_mdoc`.
+* ISO mdoc Credential Format specific DCQL parameters as defined in Annex B.3.1 of [@!OIDF.OID4VP] MUST be used.
+* Verifier MAY request more than one Credential in the same request.
+* When multiple ISO mdocs are being returned, each ISO mdoc MUST be returned in a separate `DeviceResponse` (as defined in 8.3.2.1.2.2 of [@!ISO.18013-5]), each matching to a respective DCQL query. Therefore, the resulting `vp_token` contains multiple `DeviceResponse` instances.
+* The `SessionTranscript` and `Handover` CBOR structures MUST be generated in accordance with Annex B.3.4.1 of [@!OIDF.OID4VP].
 
 ## IETF SD-JWT VC specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
 Requirements for both the Wallet and the Verifier:
 
-    * The Credential Format identifier MUST be `dc+sd-jwt`.
-  * IETF SD-JWT VC Credential Format specific DCQL parameters as defined in Section 6.4.1 of [@!OIDF.OID4VP] MUST be used.
-
+* The Credential Format identifier MUST be `dc+sd-jwt`.
+* IETF SD-JWT VC Credential Format specific DCQL parameters as defined in Section 6.4.1 of [@!OIDF.OID4VP] MUST be used.
 
 # Self-Issued OP v2
 
 To authenticate the user, subject identifier in a Self-Issued ID Token MUST be used as defined in [@!OIDF.SIOPv2].
 
-   * As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
+   * As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the Wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
    * `subject_syntax_types_supported` value MUST be `urn:ietf:params:oauth:jwk-thumbprint`
 
 # SD-JWT VCs {#sd-jwt-vc}
@@ -261,7 +223,7 @@ This profile defines the following additional requirements for IETF SD-JWT VCs a
 |status|SHOULD (at the discretion of the issuer)| [@!I-D.ietf-oauth-status-list]|
 
 * The Issuer MUST NOT make any of the JWT Claims in the table above to be selectively disclosable, so that they are always present in the SD-JWT-VC presented by the Holder.
-* It is at the discretion of the Issuer whether to use `exp` claim and/or a `status` claim to express the validity period of an SD-JWT-VC. The wallet and the verifier  MUST support both mechanisms.
+* It is at the discretion of the Issuer whether to use `exp` claim and/or a `status` claim to express the validity period of an SD-JWT-VC. The Wallet and the verifier  MUST support both mechanisms.
 * The `iss` claim MUST be an HTTPS URL. The `iss` value is used to obtain Issuer’s signing key as defined in (#issuer-key-resolution).
 * The `vct` JWT claim as defined in [@!I-D.ietf-oauth-sd-jwt-vc].
 * The `cnf` claim [@!RFC7800] MUST conform to the definition given in [@!I-D.ietf-oauth-sd-jwt-vc]. Implementations conforming to this profile MUST include the JSON Web Key [@!RFC7517] in the `jwk` sub claim.
@@ -457,11 +419,7 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
 
 # Combined Issuance of SD-JWT VC and mdocs
 
-   * If combined issuance is required, the Batch Credential Endpoint MUST be supported.
-
-# JSON Schema for the supported Presentation Definition properties {#presentation-definition-schema}
-
-<{{schemas/presentation_definition.json}}
+* If combined issuance is required, the Batch Credential Endpoint MUST be supported.
 
 # Acknowledgements {#Acknowledgements}
 
@@ -478,6 +436,13 @@ The technology described in this specification was made available from contribut
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -02
+
+   * Mandate DCQL instead of presentation exchange
+   * Refactor HAIP and add details for mdoc profile over DC API
+   * Add specific requirements for response encryption
+   * Add SessionTranscript requirements
 
    -01
 
