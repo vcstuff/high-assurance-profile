@@ -146,7 +146,7 @@ Note: Issuers should be mindful of how long the usage of the refresh token is al
 
 Wallets MUST use wallet attestations as defined in Annex E of [@!OIDF.OID4VCI].
 
-To obtain the issuer's Public key for verification, Wallet Attestions MUST support web-based key resolution as defined in Section 5 of [@!I-D.ietf-oauth-sd-jwt-vc]. The JOSE header `kid` MUST be used to identify the respective key.
+The public key, and optionally a trust chain, used to validate the signature on the Wallet Attestation MUST be included in the `x5c` JOSE header.
 
 ## Credential Endpoint
 
