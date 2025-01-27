@@ -293,25 +293,22 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
         </front>
 </reference>
 
-<reference anchor="OIDF.OID4VP" target="https://openid.net/specs/openid-4-verifiable-presentations-1_0.html">
+<reference anchor="OIDF.OID4VP" target="https://openid.net/specs/openid-4-verifiable-presentations-1_0-24.html">
       <front>
-        <title>OpenID for Verifiable Presentations</title>
+        <title>OpenID for Verifiable Presentations - draft 24</title>
         <author initials="O." surname="Terbu" fullname="Oliver Terbu">
-         <organization>Spruce Systems, Inc.</organization>
+         <organization>Mattr</organization>
         </author>
         <author initials="T." surname="Lodderstedt" fullname="Torsten Lodderstedt">
-          <organization>yes.com</organization>
+          <organization>SPRIND</organization>
         </author>
         <author initials="K." surname="Yasuda" fullname="Kristina Yasuda">
-          <organization>Microsoft</organization>
-        </author>
-        <author initials="A." surname="Lemmon" fullname="Adam Lemmon">
-          <organization>Convergence.tech</organization>
+          <organization>SPRIND</organization>
         </author>
         <author initials="T." surname="Looker" fullname="Tobias Looker">
           <organization>Mattr</organization>
         </author>
-       <date day="20" month="June" year="2022"/>
+       <date day="23" month="January" year="2025"/>
       </front>
 </reference>
 
@@ -443,6 +440,7 @@ The technology described in this specification was made available from contribut
    * Refactor HAIP and add details for mdoc profile over DC API
    * Add specific requirements for response encryption
    * Add SessionTranscript requirements
+   * Update OID4VP reference to draft 24
 
    -01
 
