@@ -482,19 +482,23 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
         </front>
 </reference>
 
-<reference anchor="VC-DATA" target="https://www.w3.org/TR/vc-data-model-2.0/">
+<reference anchor="W3C.VCDM2.0" target="https://www.w3.org/TR/2025/CRD-vc-data-model-2.0-20250127/">
         <front>
         <title>Verifiable Credentials Data Model v2.0</title>
-        <author fullname="Manu Sporny">
-            <organization>Digital Bazaar</organization>
-        </author>
-        <author fullname="Dave Longley">
-            <organization>Digital Bazaar</organization>
-        </author>
-        <author fullname="David Chadwick">
-            <organization>Crossword Cybersecurity PLC</organization>
-        </author>
-        <date day="4" month="May" year="2023"/>
+        <author fullname="Manu Sporny"/>
+        <author fullname="Dave Longley"/>
+        <author fullname="David Chadwick"/>
+        <date day="27" month="January" year="2025"/>
+        </front>
+</reference>
+
+<reference anchor="W3C.VCDM1.1" target="https://www.w3.org/TR/vc-data-model-1.1/">
+        <front>
+        <title>Verifiable Credentials Data Model v1.1</title>
+        <author fullname="Manu Sporny"/>
+        <author fullname="Dave Longley"/>
+        <author fullname="David Chadwick"/>
+        <date day="3" month="March" year="2022"/>
         </front>
 </reference>
 
