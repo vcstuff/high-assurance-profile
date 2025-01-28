@@ -1,5 +1,5 @@
 %%%
-title = "OpenID4VC High Assurance Interoperability Profile - draft 01"
+title = "OpenID4VC High Assurance Interoperability Profile - draft 03"
 abbrev = "openid4vc-high-assurance-interoperability-profile"
 ipr = "none"
 workgroup = "Digital Credentials Protocols"
@@ -7,7 +7,7 @@ keyword = ["security", "openid4vc", "sd-jwt", "sd-jwt-vc", "mdoc"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "openid4vc-high-assurance-interoperability-profile-1_0-02"
+value = "openid4vc-high-assurance-interoperability-profile-1_0-03"
 status = "standard"
 
 [[author]]
@@ -517,6 +517,10 @@ The technology described in this specification was made available from contribut
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -03
+
+   * Add SD-JWT VCDM
 
    -02
 
