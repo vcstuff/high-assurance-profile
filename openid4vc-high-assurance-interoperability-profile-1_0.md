@@ -96,11 +96,7 @@ defined in [@ISO.18013-7]. For more details, also see Annex B.3 in [@!OIDF.OID4V
 
 ## Standards Requirements
 
-<<<<<<< HEAD
 This specification enables interoperable implementations of the following flows:
-=======
-This specification enables interoperable implementation of the following four flows:
->>>>>>> 547236d (fix rebasing)
 
 * Issuance of IETF SD-JWT VC using OpenID4VCI
 * Presentation of IETF SD-JWT VC using OpenID4VP
@@ -184,10 +180,6 @@ The following requirements apply for both, the Wallet and the Verifier, unless s
   value `ECDH-ES` (as defined in [@!RFC7518, section 4.6]), with key agreement utilizing keys on the `P-256` curve (see [@!RFC7518, section 6.2.1.1]) MUST be supported.
   The JWE `enc` (encryption algorithm) header parameter (see [@!RFC7516, section 4.1.2]) value `A128GCM` (as defined in [@!RFC7518, section 5.3]) MUST be supported.
 * The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used.
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
 
 ## ISO mdoc specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
