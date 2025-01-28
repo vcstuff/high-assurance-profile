@@ -265,9 +265,9 @@ When IETF SD-JWT VC is mentioned in this specification, SD-JWT VCDM defined in t
 For backward compatibility with JWT processors, the following registered JWT claims MUST be used, instead of their respective counterpart properties in [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0]:
 
 * To represent the validity period of SD-JWT VCDM (i.e., cryptographic signature), `exp`/`iat` Claims encoded as a UNIX timestamp (NumericDate) MUST be used, and not `expirationDate` and `issuanceDate` properties.
-* `iss` Claim MUST represent the identifier of the `issuer` property, i.e., the `issuer` property value if `issuer` is a String, or the `id` property of the `issuer` object if `issuer` is an object.
-* `status` Claim MUST represent `credentialStatus` property.
-* `sub` Claim MUST represent the `id` property of `credentialSubject` property.
+* `iss` Claim MUST represent the identifier of the `issuer` property, i.e., the `issuer` property value if `issuer` is a String, or the `id` property of the `issuer` object if `issuer` is an object. `issuer` property MUST be ignored if present.
+* `status` Claim MUST represent `credentialStatus` property. `credentialStatus` property MUST be ignored if present.
+* `sub` Claim MUST represent the `id` property of `credentialSubject` property. `credentialSubject` property MUST be ignored if present.
 
 IETF SD-JWT VC is extended with the following claims:
 
@@ -278,8 +278,7 @@ The following is a non-normative example of an unsecured payload of an SD-JWT VC
 ```json
 {
   "vct": "https://credentials.example.com/identity_credential",
-  //W3C VCDM 2.0 compliant claims
-  "vcdm": {
+  "vcdm": {    //W3C VCDM 2.0 compliant claims
     "@context": ["https://www.w3.org/ns/credentials/v2"],
     "type": ["VerifiableCredential", "https://credentials.example.com/identity_credential"],
     "credentialSubject": {
