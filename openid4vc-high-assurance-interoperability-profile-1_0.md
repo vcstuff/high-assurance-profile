@@ -96,14 +96,10 @@ defined in [@ISO.18013-7]. For more details, also see Annex B.3 in [@!OIDF.OID4V
 
 ## Standards Requirements
 
-<<<<<<< HEAD
-This specification enables interoperable implementations of the following flows:
-=======
 This specification enables interoperable implementation of the following four flows:
->>>>>>> 6a38c23 (Apply editorial suggestions from Joseph's code review)
 
 * Issuance of IETF SD-JWT VC using OpenID4VCI
-* Presentation of IETF SD-JWT VC using OpenID4VP without using W3C Digital Credentials API
+* Presentation of IETF SD-JWT VC using OpenID4VP
 * Presentation of IETF SD-JWT VC using OpenID4VP over W3C Digital Credentials API
 * Presentation of ISO mdocs using OpenID4VP over W3C Digital Credentials API
 
@@ -210,13 +206,9 @@ This is an example of a Wallet Instance Attestation:
 
 * The Credential Issuer MUST publish a mapping of every Credential Type it supports to a scope value.
 
-<<<<<<< HEAD
 # OpenID for Verifiable Presentations profile for IETF SD-JWT VC
 
 Requirements for both the Wallet and the Verifier:
-=======
-# OpenID for Verifiable Presentations profile for SD-JWT VC without using W3C Digital Credentials API
->>>>>>> 6a38c23 (Apply editorial suggestions from Joseph's code review)
 
    * As a way to invoke the Wallet, at least a custom URL scheme `haip://` MUST be supported. Implementations MAY support other ways to invoke the wallets as agreed by trust frameworks/ecosystems/jurisdictions, not limited to using other custom URL schemes.
    * Response type MUST be `vp_token`.
@@ -233,7 +225,6 @@ Requirements for both the Wallet and the Verifier:
 
 # OpenID for Verifiable Presentations over W3C Digital Credentials API
 
-<<<<<<< HEAD
 The following requirements apply for both, the Wallet and the Verifier, unless specified otherwise:
 
 * MUST support Annex A in [@!OIDF.OID4VP] that defines how to use OpenID4VP over the W3C Digital Credentials API.
@@ -243,15 +234,6 @@ The following requirements apply for both, the Wallet and the Verifier, unless s
 * Specific requirements for the response encryption are tbd (https://github.com/openid/oid4vc-haip/issues/131).
 * The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DCQL query and response that MUST be supported:
   * tbd (https://github.com/openid/oid4vc-haip/issues/142)
-=======
-* MUST support Annex A in [@!OIDF.OID4VP] that defines how to use OID4VP over the W3C Digital Credentials API.
-  * The Wallet MUST support both signed and unsigned requests defined in Annex A.3.1 and A.3.2 of [@!OIDF.OID4VP]. The Verifier MUST support signed and/or unsigned requests.
-* Wallet Invocation is done via the W3C Digital Credentials API or an equivalent platform API. Custom URL schemes MUST NOT be used.
-* Response Mode MUST be `w3c_dc_api.jwt`. Encryption of the response is mandatory.
-* MUST support Transaction Data defined in Sections 5.4 and 7.4 of [@!OIDF.OID4VP].
-* The DQCL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used. Below is the list of features in the DQCL query and response that MUST be supported:
-  * tbd
->>>>>>> 982985f (allow both signed and unsigned requests. mandate both for the wallet, clarify that the verifier has a choice)
 
 ## ISO mdoc specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
