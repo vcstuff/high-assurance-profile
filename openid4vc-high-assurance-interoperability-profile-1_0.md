@@ -266,7 +266,7 @@ Implementaters of SD-JWT VCDM MUST use valid values for both `vct` Claim defined
 
 For backward compatibility with JWT processors, the following registered JWT claims MUST be used, instead of their respective counterpart properties in W3C VCDM [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0]:
 
-* To represent the validity period of SD-JWT VCDM (i.e., cryptographic signature), `exp`/`iat` Claims encoded as a UNIX timestamp (NumericDate) MUST be used, and not `expirationDate` and `issuanceDate` properties.
+* To represent the validity period of SD-JWT VCDM (i.e., cryptographic signature), `exp`/`iat` Claims encoded as a UNIX timestamp (NumericDate) MUST be used, and not `expirationDate` and `issuanceDate` properties defined in [@!W3C.VCDM1.1], `validFrom` and `validTo` properties defined in [@!W3C.VCDM2.0].
 * `iss` Claim MUST represent the identifier of the `issuer` property, i.e., the `issuer` property value if `issuer` is a String, or the `id` property of the `issuer` object if `issuer` is an object. `issuer` property MUST be ignored if present.
 * `status` Claim MUST represent `credentialStatus` property. `credentialStatus` property MUST be ignored if present.
 * `sub` Claim MUST represent the `id` property of `credentialSubject` property. `credentialSubject` property MUST be ignored if present.
