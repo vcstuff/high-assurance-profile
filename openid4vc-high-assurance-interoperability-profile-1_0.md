@@ -96,7 +96,7 @@ defined in [@ISO.18013-7]. For more details, also see Annex B.3 in [@!OIDF.OID4V
 
 ## Standards Requirements
 
-This specification enables interoperable implementation of the following four flows:
+This specification enables interoperable implementations of the following flows:
 
 * Issuance of IETF SD-JWT VC using OpenID4VCI
 * Presentation of IETF SD-JWT VC using OpenID4VP
@@ -353,9 +353,8 @@ When IETF SD-JWT VC is mentioned in this specification, SD-JWT VCDM defined in t
 
 For backward compatibility with JWT processors, the following registered JWT claims MUST be used, instead of their respective counterpart properties in [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0]:
 
-* `exp` Claim MUST represent the `expirationDate` property, encoded as a UNIX timestamp (NumericDate).
+* To represent the validity period of SD-JWT VCDM (i.e., cryptographic signature), `exp`/`iat` Claims encoded as a UNIX timestamp (NumericDate) MUST be used, and not `expirationDate` and `issuanceDate` properties.
 * `iss` Claim MUST represent the `issuer` property.
-* `iat` Claim MUST represent `issuanceDate` property, encoded as a UNIX timestamp (NumericDate).
 * `status` Claim MUST represent `credentialStatus` property.
 * `sub` Claim MUST represent the `id` property of `credentialSubject` property.
 
