@@ -3,12 +3,12 @@
 This is the working area for the High Assurance Interoperability Profile of OpenID4VC with SD-JWT VC or ISO mdoc.
 
 * [Editor's Copy](https://openid.github.io/oid4vc-haip/openid4vc-high-assurance-interoperability-profile-wg-draft.html)
-* [Working Group Draft](https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-sd-jwt-vc-1_0.html)
+* [Working Group Draft](https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-1_0.html)
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/openid/openid/oid4vc-haip/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
