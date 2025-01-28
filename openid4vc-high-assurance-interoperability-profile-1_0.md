@@ -96,7 +96,11 @@ defined in [@ISO.18013-7]. For more details, also see Annex B.3 in [@!OIDF.OID4V
 
 ## Standards Requirements
 
+<<<<<<< HEAD
 This specification enables interoperable implementations of the following flows:
+=======
+This specification enables interoperable implementation of the following four flows:
+>>>>>>> 547236d (fix rebasing)
 
 * Issuance of IETF SD-JWT VC using OpenID4VCI
 * Presentation of IETF SD-JWT VC using OpenID4VP
