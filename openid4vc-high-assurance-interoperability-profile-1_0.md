@@ -256,13 +256,15 @@ A Credential Format Profile for Credentials complying with IETF SD-JWT VCs [@!I-
 
 ## SD-JWT VC Data Model (SD-JWT VCDM)
 
-SD-JWT VCDM is a credential format that is compliant to IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc] that allows the usage of existing data structures represented using [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0], while enabling selective disclosure.
+SD-JWT VCDM is a credential format that is compliant to IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc] that allows the usage of existing data structures represented using W3C VCDM [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0], while enabling selective disclosure.
 
 SD-JWT VCDM credentials contain a data structure that can be processed using a JSON-LD processor after applying SD-JWT processing.
 
 When IETF SD-JWT VC is mentioned in this specification, SD-JWT VCDM defined in this section MAY be used.
 
-For backward compatibility with JWT processors, the following registered JWT claims MUST be used, instead of their respective counterpart properties in [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0]:
+Implementaters of SD-JWT VCDM MUST use valid values for both `vct` Claim defined in IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc] and `type` proprty defined in W3C VCDM [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0].
+
+For backward compatibility with JWT processors, the following registered JWT claims MUST be used, instead of their respective counterpart properties in W3C VCDM [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0]:
 
 * To represent the validity period of SD-JWT VCDM (i.e., cryptographic signature), `exp`/`iat` Claims encoded as a UNIX timestamp (NumericDate) MUST be used, and not `expirationDate` and `issuanceDate` properties.
 * `iss` Claim MUST represent the identifier of the `issuer` property, i.e., the `issuer` property value if `issuer` is a String, or the `id` property of the `issuer` object if `issuer` is an object. `issuer` property MUST be ignored if present.
