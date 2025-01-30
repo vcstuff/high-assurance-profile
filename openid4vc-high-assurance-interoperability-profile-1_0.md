@@ -105,6 +105,8 @@ This specification enables interoperable implementations of the following flows:
 
 Implementations of this specification do not have to implement all of the flows listed above, but they MUST be compliant to all of the requirements for a particular flow they chose to implement.
 
+A parameter that is listed as optional to be implemented in a specification that is being profiled (i.e., OpenID4VCI, OpenID4VP, W3C Digital Credentials API, IETF SD-JWT VC, and ISO mdoc) remains optional unless it is stated otherwise in this specification.
+
 # OpenID for Verifiable Credential Issuance
 
 Both the Wallet and the Credential Issuer:
