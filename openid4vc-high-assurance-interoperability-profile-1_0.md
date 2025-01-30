@@ -1,5 +1,5 @@
 %%%
-title = "OpenID4VC High Assurance Interoperability Profile - draft 01"
+title = "OpenID4VC High Assurance Interoperability Profile - draft 03"
 abbrev = "openid4vc-high-assurance-interoperability-profile"
 ipr = "none"
 workgroup = "Digital Credentials Protocols"
@@ -7,7 +7,7 @@ keyword = ["security", "openid4vc", "sd-jwt", "sd-jwt-vc", "mdoc"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "openid4vc-high-assurance-interoperability-profile-1_0-02"
+value = "openid4vc-high-assurance-interoperability-profile-1_0-03"
 status = "standard"
 
 [[author]]
@@ -183,7 +183,6 @@ The following requirements apply for both, the Wallet and the Verifier, unless s
   The JWE `enc` (encryption algorithm) header parameter (see [@!RFC7516, section 4.1.2]) value `A128GCM` (as defined in [@!RFC7518, section 5.3]) MUST be supported.
 * The DCQL query and response as defined in Section 6 of [@!OIDF.OID4VP] MUST be used. Presentation Exchange as defined in Sections 5.4 and 5.5 of [@!OIDF.OID4VP] MUST NOT be used.
 
-
 ## ISO mdoc specific requirements for OpenID for Verifiable Presentations over W3C Digital Credentials API
 
 Requirements for both the Wallet and the Verifier:
@@ -256,6 +255,91 @@ Note: The issuer MAY decide to support both options. In which case, it is at the
 ## OpenID4VC Credential Format Profile {#vc_sd_jwt_profile}
 
 A Credential Format Profile for Credentials complying with IETF SD-JWT VCs [@!I-D.ietf-oauth-sd-jwt-vc] is defined in Annex A.3 of [@!OIDF.OID4VCI] and Annex A.4 of [@!OIDF.OID4VP].
+
+## SD-JWT VC Data Model (SD-JWT VCDM)
+
+SD-JWT VCDM is a credential format that is compliant to IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc] that allows the usage of existing data structures represented using W3C VCDM [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0], while enabling selective disclosure.
+
+SD-JWT VCDM credentials contain a data structure that can be processed using a JSON-LD processor after applying SD-JWT processing.
+
+When IETF SD-JWT VC is mentioned in this specification, SD-JWT VCDM defined in this section MAY be used.
+
+Implementaters of SD-JWT VCDM MUST use valid values for both `vct` Claim defined in IETF SD-JWT VC [@!I-D.ietf-oauth-sd-jwt-vc] and `type` proprty defined in W3C VCDM [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0].
+
+For backward compatibility with JWT processors, the following registered JWT claims MUST be used, instead of their respective counterpart properties in W3C VCDM [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0]:
+
+* To represent the validity period of SD-JWT VCDM (i.e., cryptographic signature), `exp`/`iat` Claims encoded as a UNIX timestamp (NumericDate) MUST be used, and not `expirationDate` and `issuanceDate` properties defined in [@!W3C.VCDM1.1], `validFrom` and `validTo` properties defined in [@!W3C.VCDM2.0].
+* `iss` Claim MUST represent the identifier of the `issuer` property, i.e., the `issuer` property value if `issuer` is a String, or the `id` property of the `issuer` object if `issuer` is an object. `issuer` property MUST be ignored if present.
+* `status` Claim MUST represent `credentialStatus` property. `credentialStatus` property MUST be ignored if present.
+* `sub` Claim MUST represent the `id` property of `credentialSubject` property. `credentialSubject` property MUST be ignored if present.
+
+IETF SD-JWT VC is extended with the following claims:
+
+* `vcdm`: OPTIONAL. Contains properties defined in [@!W3C.VCDM1.1] or [@!W3C.VCDM2.0] that are not represented by their counterpart JWT Claims as defined above.
+
+The following outlines a suggested non-normative processing steps for SD-JWT VCDM:
+
+1. SD-JWT VC Processing:
+
+- A receiver (holder or verifier) of an SD-JWT VCDM applies the processing rules outlined in Section 4 of [@!I-D.ietf-oauth-sd-jwt-vc], including verifying signatures, validity periods, status information, etc.
+- If the `vct` value is associated with any SD-JWT VC Type Metadata, schema validation of the entire SD-JWT VCDM is performed, including the nested `vcdm` claim.
+- Additionally, trust framework rules are applied, such as ensuring the issuer is authorized to issue SD-JWT VCDMs for the specified `vct` value.
+
+2. Business Logic Processing:
+
+- Once the SD-JWT VC is verified and trusted by the SD-JWT VC processor, and if the `vcdm` claim is present, the receiver extracts the VCDM (1.1 or 2.0) object from the `vcdm` claim and uses this for the business logic object. If the `vcdm` claim is not present, the entire SD-JWT VC is considered to represent the business logic object.
+- The business logic object is then passed on for further use case-specific processing and validation. The business logic assumes that all security-critical functions (e.g., signature verification, trusted issuer) have already been performed during the previous step. Additional schema validation is applied if provided in the `vcdm` claim, e.g., to support SHACL schemas. Note that while a `vct` claim is required, SD-JWT VC type metadata resolution and related schema validation is optional in certain cases.
+
+The following is a non-normative example of an unsecured payload of an SD-JWT VCDM, that is built using the example of unsecured payload in Section 3.3 of [@!I-D.ietf-oauth-sd-jwt-vc]:
+
+```json
+{
+  "vct": "https://credentials.example.com/identity_credential",
+  "vcdm": {    //W3C VCDM 2.0 compliant claims
+    "@context": ["https://www.w3.org/ns/credentials/v2"],
+    "type": ["VerifiableCredential", "https://credentials.example.com/identity_credential"],
+    "credentialSubject": {
+      "given_name": "John",
+      "family_name": "Doe",
+      "email": "johndoe@example.com",
+      "phone_number": "+1-202-555-0101",
+      "address": {
+        "street_address": "123 Main St",
+        "locality": "Anytown",
+        "region": "Anystate",
+        "country": "US"
+      },
+      "birthdate": "1940-01-01",
+      "is_over_18": true,
+      "is_over_21": true,
+      "is_over_65": true
+    }
+  }
+}
+```
+
+The following is a non-normative example of how an unsecured payload of an SD-JWT VCDM above can be used for the SD-JWT:
+
+```json
+{
+  "_sd": [
+    "vwUhdFvpylx9Sqi2YNBV1dfVK6lCbhXvkH0nThfKFT0"
+  ],
+  "iss": "https://example.com/issuer",
+  "iat": 1683000000,
+  "exp": 1883000000,
+  "vct": "https://credentials.example.com/identity_credential",
+  "_sd_alg": "sha-256",
+  "cnf": {
+    "jwk": {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc",
+      "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
+    }
+  }
+}
+```
 
 # Crypto Suites
 
@@ -400,19 +484,23 @@ Note: When using this profile with other cryptosuites, it is recommended to be e
         </front>
 </reference>
 
-<reference anchor="VC-DATA" target="https://www.w3.org/TR/vc-data-model-2.0/">
+<reference anchor="W3C.VCDM2.0" target="https://www.w3.org/TR/2025/CRD-vc-data-model-2.0-20250127/">
         <front>
         <title>Verifiable Credentials Data Model v2.0</title>
-        <author fullname="Manu Sporny">
-            <organization>Digital Bazaar</organization>
-        </author>
-        <author fullname="Dave Longley">
-            <organization>Digital Bazaar</organization>
-        </author>
-        <author fullname="David Chadwick">
-            <organization>Crossword Cybersecurity PLC</organization>
-        </author>
-        <date day="4" month="May" year="2023"/>
+        <author fullname="Manu Sporny"/>
+        <author fullname="Dave Longley"/>
+        <author fullname="David Chadwick"/>
+        <date day="27" month="January" year="2025"/>
+        </front>
+</reference>
+
+<reference anchor="W3C.VCDM1.1" target="https://www.w3.org/TR/vc-data-model-1.1/">
+        <front>
+        <title>Verifiable Credentials Data Model v1.1</title>
+        <author fullname="Manu Sporny"/>
+        <author fullname="Dave Longley"/>
+        <author fullname="David Chadwick"/>
+        <date day="3" month="March" year="2022"/>
         </front>
 </reference>
 
@@ -435,6 +523,10 @@ The technology described in this specification was made available from contribut
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -03
+
+   * Add SD-JWT VCDM
 
    -02
 
