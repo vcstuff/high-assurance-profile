@@ -1,5 +1,5 @@
 %%%
-title = "OpenID4VC High Assurance Interoperability Profile - draft 01"
+title = "OpenID4VC High Assurance Interoperability Profile - Editor's draft"
 abbrev = "openid4vc-high-assurance-interoperability-profile"
 ipr = "none"
 workgroup = "Digital Credentials Protocols"
