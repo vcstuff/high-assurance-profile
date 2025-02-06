@@ -262,15 +262,14 @@ A Credential Format Profile for Credentials complying with IETF SD-JWT VCs [@!I-
 
 Cryptography is required by the following operations:
 
-- Attestation of trust with the entities of the ecosystem.
-- Issuance and presentation using the cryptografic proof of possession of the Wallet Instance Attestations.
-- Issuance of the Verifiable Credentials.
-- Presentation Request: the process where a Verifier requests to the Holder the presentation of the Verifiable Credentials.
-- Presentation using the cryptografic proof of possession of the Credentials.
+- to sign and validate the signature on the Wallet Attestation and its proof of possession
+- to sign and validate the Issuer's signature on the Verifiable Credential
+- to sign and validate the Holder's signature on the Verifiable Presentation
+- to sign and validate the Verifier's signature on the Presentation Request
 
-Issuers, Holders, and Verifiers MUST support P-256 (secp256r1) as a key type with the ES256 JWT algorithm [@!RFC7518] for the creation and the verification of the signatures.
+Issuers, Holders, and Verifiers MUST support P-256 (secp256r1) as a key type with the ES256 JWT algorithm [@!RFC7518] for the creation and the verification of the above signatures.
 
-When using this profile alongside other cryptosuites, each entity SHOULD explicit the supported algorithms and key types in its metadata for the processes of the signature operations.
+When using this profile alongside other cryptosuites, each entity SHOULD make it explicit in its metadata which other algorithms and key types are supported for the cryptographic operations.
 
 # Hash Algoritms
 
